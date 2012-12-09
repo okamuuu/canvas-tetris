@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>HTML5 Tetris</title>
+    <link rel='stylesheet' href='style.css' />
+    <script src='lib/tetris.js'></script>
+</head>
+<body>
+<canvas width='300' height='600'></canvas>
+<script>
+var canvas = document.getElementsByTagName('canvas')[0];
+var ctx = canvas.getContext('2d');
+
+var W = 300, H = 600;
+var COLS = 10, ROWS = 20;
+
+var BLOCK_W = W / COLS;
+var BLOCK_H = H / ROWS;
+
+function drawBlock( x, y ) {
+    ctx.fillRect( BLOCK_W * x, BLOCK_H * y, BLOCK_W - 1 , BLOCK_H - 1 );
+    ctx.strokeRect( BLOCK_W * x, BLOCK_H * y, BLOCK_W - 1 , BLOCK_H - 1 );
+}
+
+function render(board, cursol) {
+    
+    ctx.clearRect( 0, 0, W, H );
+
+    ctx.fillStyle = 'red';
+    ctx.strokeStyle = 'black';
+    for ( var x = 0; x < COLS; ++x ) {
+        for ( var y = 0; y < ROWS; ++y ) {
+            if ( board[ y ][ x ] ) {
+//                ctx.fillStyle = colors[ board[ y ][ x ] - 1 ];
+                drawBlock( x, y );
+            }
+        }
+    }
+
+    //ctx.fillStyle = 'red';
+    ctx.strokeStyle = 'black';
+
+    for ( var y = 0; y < 4; ++y ) {
+        for ( var x = 0; x < 4; ++x ) {
+            if ( cursol.shape[ y ][ x ] ) {
+//                ctx.fillStyle = colors[ board.shape[ y ][ x ] - 1 ];
+                drawBlock( cursol.positions.x + x, cursol.positions.y + y );
+            }
+        }
+    }
+
+}
+
+var board = tetris.createBoard(ROWS, COLS);
+var positions = tetris.getInitialPositions(COLS);
+var shape1 = tetris.createShape(1);
+
+var cursol = tetris.createCursol(positions, shape1);
+
+render(board, cursol);
+//setInterval(render, 30);
+ 
+function keyPress(key) {
+
+    switch (key) {
+    case 'left':
+        if (valid(-1)) {
+            --currentX;
+        }
+        break;
+    case 'right':
+        if (valid(1)) {
+            ++currentX;
+        }
+        break;
+    case 'down':
+        if (valid(0, 1)) {
+            ++currentY;
+        }
+        else {
+            tick();
+        }
+        break;
+    case 'rotate':
+        var rotated = rotate(current);
+        if (valid(0, 0, rotated)) {
+            current = rotated;
+        }
+        break;
+    }
+}
+
+document.body.onkeydown = function(e) {
+
+    var keys = {
+        37: 'left',
+        39: 'right',
+        40: 'down',
+        38: 'rotate'
+    };
+    
+    if( keys[e.keyCode] ) {
+        keyPress( keys[ e.keyCode ]);
+        render();
+    }
+}
+
+</script>
+</body>
+</html>
