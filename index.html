@@ -66,6 +66,14 @@ function tick () {
     if( tetris.isMovable(board, cursol, 'down') ) {
         tetris.moveCursol(cursol, 'down');
     }
+    else {
+        tetris.freeze(board, cursol);
+        tetris.clearLines(board);
+
+        shape = tetris.createRandomShape();
+        cursol = tetris.createCursol(tetris.getInitialPositions(COLS), shape);
+
+    }
     render(board, cursol);
 }
 
