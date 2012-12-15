@@ -71,31 +71,13 @@ function tick () {
 
 function keyPress(key) {
 
-    switch (key) {
-    case 'left':
-        if (valid(-1)) {
-            --currentX;
+    if(key === 'rotate' ) {
+
+    }
+    else if(key) {
+        if ( tetris.isMovable(board, cursol, key) ) {
+            tetris.moveCursol(cursol, key);
         }
-        break;
-    case 'right':
-        if (valid(1)) {
-            ++currentX;
-        }
-        break;
-    case 'down':
-        if (valid(0, 1)) {
-            ++currentY;
-        }
-        else {
-            tick();
-        }
-        break;
-    case 'rotate':
-        var rotated = rotate(current);
-        if (valid(0, 0, rotated)) {
-            current = rotated;
-        }
-        break;
     }
 }
 
@@ -110,7 +92,7 @@ document.body.onkeydown = function(e) {
     
     if( keys[e.keyCode] ) {
         keyPress( keys[ e.keyCode ]);
-        render();
+        render(board, cursol);
     }
 }
 
