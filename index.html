@@ -59,8 +59,16 @@ var shape1 = tetris.createShape(1);
 var cursol = tetris.createCursol(positions, shape1);
 
 render(board, cursol);
-//setInterval(render, 30);
- 
+setInterval(tick, 1000);
+
+function tick () {
+
+    if( tetris.isMovable(board, cursol, 'down') ) {
+        tetris.moveCursol(cursol, 'down');
+    }
+    render(board, cursol);
+}
+
 function keyPress(key) {
 
     switch (key) {

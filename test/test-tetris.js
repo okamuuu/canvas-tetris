@@ -209,4 +209,18 @@ describe('Tetris create board object', function() {
         should.deepEqual(board, expected);
     });
 
+    it('isMovable', function() {
+
+        // ready test 
+        var board = tetris.createBoard(20, 10);
+
+        var shape1 = tetris.createShape(1);
+        var cursol = tetris.createCursol({y:17, x:4}, shape1);
+
+        should.ok( tetris.isMovable(board, cursol, 'down') );
+
+        var cursol2 = tetris.createCursol({y:18, x:4}, shape1);
+        
+        should.ok( ! tetris.isMovable(board, cursol2, 'down') );
+    });
 });
