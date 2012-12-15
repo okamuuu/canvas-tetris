@@ -88,7 +88,7 @@ describe('Tetris create board object', function() {
         var shape1 = tetris.createShape(1);
         var cursol = tetris.createCursol(positions, shape1);
 
-        tetris.rotateCursolShape(cursol);
+        tetris.rotateCursol(cursol);
         
         var expected = [ 
             [ 0, 0, 2, 2 ], 

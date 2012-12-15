@@ -70,15 +70,9 @@ function tick () {
 }
 
 function keyPress(key) {
-
-    if(key === 'rotate' ) {
-
-    }
-    else if(key) {
         if ( tetris.isMovable(board, cursol, key) ) {
             tetris.moveCursol(cursol, key);
         }
-    }
 }
 
 document.body.onkeydown = function(e) {
